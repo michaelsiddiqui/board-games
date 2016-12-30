@@ -8,7 +8,7 @@ class SingleDie(object):
     """Models a single die with a variable number of sides
 
     Initialization default set to six sides
-    Automatically is 'rolled' upon initialization
+    Automatically 'rolled' upon initialization
     """
     def __init__(self, num_sides=6):
         self.num_sides = num_sides
