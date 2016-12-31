@@ -139,4 +139,14 @@ class TestDiceRollerMethods(unittest.TestCase):
         self.assertEqual(roll_most_common[0][0], 7)
         self.assertEqual(least_common_values, [2, 12])
 
-    # TO-DO: write last error-checking test
+    def test_non_allowed_initialization(self):
+        """Test that I get a TypeError when DiceRoller improperly initialized
+
+        """
+        initial_attributes = {
+            'num_dice': 2,
+            'num_sides': 11,
+            'extra_arg': 'nonsense'
+        }
+        with self.assertRaises(TypeError) as context:
+            DiceRoller(**initial_attributes)
