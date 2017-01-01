@@ -5,8 +5,8 @@
 import unittest
 from collections import Counter
 
-from dice import SingleDie
-from dice import DiceRoller
+from base_models.dice import SingleDie
+from base_models.dice import DiceRoller
 
 
 class TestSingleDieMethods(unittest.TestCase):

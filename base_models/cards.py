@@ -45,6 +45,10 @@ class DeckOfCards(object):
     """
     def __init__(self, card_list=[]):
         self.card_list = []
+
+        # idea: is there a way to make a reusable util function to check
+        #       a list for containing the constrained object type?
+        #       may be reusing this functionality more
         if card_list:
             type_check = all([isinstance(item, Card) for item in card_list])
             if not type_check:

@@ -6,8 +6,8 @@
 
 import unittest
 
-from cards import Card
-from cards import DeckOfCards
+from base_models.cards import Card
+from base_models.cards import DeckOfCards
 
 
 class TestCardMethods(unittest.TestCase):
