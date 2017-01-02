@@ -54,4 +54,3 @@ class DiceRoller(object):
         """
         self.roll_value = sum([die.roll() for die in self.dice])
         return self.roll_value
-        

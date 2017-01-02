@@ -5,6 +5,8 @@
 from collections import deque
 import random
 
+from utils import list_type_check
+
 
 class Card(object):
     """Base class for all card or tile objects in board_game project
@@ -46,11 +48,8 @@ class DeckOfCards(object):
     def __init__(self, card_list=[]):
         self.card_list = []
         if card_list:
-            type_check = all([isinstance(item, Card) for item in card_list])
-            if not type_check:
-                raise TypeError("Expect list to only contain Card objects")
-            else:
-                self.card_list.extend([card for card in card_list])
+            type_check = list_type_check(card_list, Card, error=True)
+            self.card_list.extend([card for card in card_list])
 
         # update the cards_left count
         self.cards_left = len(self.card_list)

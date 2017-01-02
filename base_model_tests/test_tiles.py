@@ -3,7 +3,7 @@
 
 import unittest
 
-from tiles import Tile
+from base_models.tiles import Tile
 
 
 class TestTileMethods(unittest.TestCase):
