@@ -20,6 +20,7 @@
 
 from cards import DeckOfCards
 from tiles import Tile
+from utils import list_type_check
 
 
 class Board(object):
@@ -41,31 +42,24 @@ class Board(object):
 
     Additional attributes may be added later.
     """
-    def __init__(self, spaces=[], tiles=[], decks=[], tokens=[], score=None):
+    def __init__(self,
+    		spaces=[],
+    		tiles=[],
+    		decks=[],
+    		tokens=[],
+    		dice_rollers =[],
+    		score=None
+    	):
         self.spaces = spaces
         self.tiles = []
-
-        # idea: is there a way to make a reusable util function to check
-        #       a list for containing the constrained object type?
-        #       may be reusing this functionality more
         if tiles:
-            tiles_type_check = all([isinstance(obj, Tile) for obj in tiles])
-            if not tiles_type_check:
-                raise TypeError("Expect list to only contain Tile objects")
-            else:
-                self.tiles.extend([obj for obj in tiles])
+            tiles_type_check = list_type_check(tiles, Tile, error=True)
+            self.tiles.extend([obj for obj in tiles])
 
         self.decks = []
-
-        # idea: is there a way to make a reusable util function to check
-        #       a list for containing the constrained object type?
-        #       may be reusing this functionality more
         if decks:
-            deck_check = all([isinstance(obj, DeckOfCards) for obj in decks])
-            if not deck_check:
-                raise TypeError("Expect list to only contain Tile objects")
-            else:
-                self.decks.extend([obj for obj in decks])
+            deck_type_check = list_type_check(decks, DeckOfCards, error=True)
+            self.decks.extend([obj for obj in decks])
 
         self.tokens = tokens
         self.score = score
