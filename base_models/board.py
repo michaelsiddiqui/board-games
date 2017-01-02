@@ -20,6 +20,7 @@
 
 from cards import DeckOfCards
 from tiles import Tile
+from dice import DiceRoller
 from utils import list_type_check
 
 
@@ -43,13 +44,13 @@ class Board(object):
     Additional attributes may be added later.
     """
     def __init__(self,
-    		spaces=[],
-    		tiles=[],
-    		decks=[],
-    		tokens=[],
-    		dice_rollers =[],
-    		score=None
-    	):
+                 spaces=[],
+                 tiles=[],
+                 decks=[],
+                 tokens=[],
+                 dice_rollers=[],
+                 score=None
+                 ):
         self.spaces = spaces
         self.tiles = []
         if tiles:
@@ -60,6 +61,13 @@ class Board(object):
         if decks:
             deck_type_check = list_type_check(decks, DeckOfCards, error=True)
             self.decks.extend([obj for obj in decks])
+
+        self.dice_rollers = []
+        if dice_rollers:
+            roller_type_check = list_type_check(
+                dice_rollers, DiceRoller, error=True
+            )
+            self.dice_rollers.extend([obj for obj in dice_rollers])
 
         self.tokens = tokens
         self.score = score

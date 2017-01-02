@@ -6,6 +6,7 @@ from base_models.board import Board
 from base_models.cards import DeckOfCards
 from base_models.cards import Card
 from base_models.tiles import Tile
+from base_models.dice import DiceRoller
 
 
 class TestBoardMethods(unittest.TestCase):
@@ -35,6 +36,8 @@ class TestBoardMethods(unittest.TestCase):
         self.test_deck = DeckOfCards(card_list=self.card_init_list)
         self.test_deck_list = [self.test_deck]
         self.test_tile_list = [self.test_tile]
+        self.test_dice_roller = DiceRoller()
+        self.test_roller_list = [self.test_dice_roller]
 
     def test_default_initialization(self):
         """Test that when I initialize with no args I get a Board object
@@ -46,12 +49,14 @@ class TestBoardMethods(unittest.TestCase):
             'tiles': [],
             'decks': [],
             'tokens': [],
+            'dice_rollers': [],
             'score': None
         }
         self.assertEqual(test_board.spaces, [])
         self.assertEqual(test_board.tiles, [])
         self.assertEqual(test_board.decks, [])
         self.assertEqual(test_board.tokens, [])
+        self.assertEqual(test_board.dice_rollers, [])
         self.assertFalse(test_board.score)
         self.assertEqual(test_board.__dict__, expected_dict)
         self.assertTrue(isinstance(test_board, Board))
@@ -66,6 +71,7 @@ class TestBoardMethods(unittest.TestCase):
             'tiles': self.test_tile_list,
             'decks': self.test_deck_list,
             'tokens': [],
+            'dice_rollers': self.test_roller_list,
             'score': ["Player One Wins!"]
         }
         test_board = Board(**initial_attributes)
@@ -73,11 +79,12 @@ class TestBoardMethods(unittest.TestCase):
         self.assertEqual(test_board.tiles, self.test_tile_list)
         self.assertEqual(test_board.decks, self.test_deck_list)
         self.assertEqual(test_board.tokens, [])
+        self.assertEqual(test_board.dice_rollers, self.test_roller_list)
         self.assertEqual(test_board.score, ["Player One Wins!"])
         self.assertEqual(test_board.__dict__, initial_attributes)
         self.assertTrue(isinstance(test_board, Board))
 
-    def test_non_allowed_initialization(self):
+    def test_non_allowed_initialization_kwarg(self):
         """Test that I get a reasonable error when Board is improperly created
 
         """
@@ -89,4 +96,46 @@ class TestBoardMethods(unittest.TestCase):
             'extra_arg': 'nonsense'
         }
         with self.assertRaises(TypeError) as context:
-            Tile(**initial_attributes)
+            Board(**initial_attributes)
+
+    def test_bad_tile_list(self):
+        """Test for TypeError raised when tiles list has non-Tile object
+        """
+        initial_attributes = {
+            'spaces': ['a', 'b', 'c'],
+            'tiles': self.test_tile_list + ['nonsense'],
+            'decks': self.test_deck_list,
+            'tokens': [],
+            'dice_rollers': self.test_roller_list,
+            'score': ["Player One Wins!"]
+        }
+        with self.assertRaises(TypeError) as context:
+            Board(**initial_attributes)
+
+    def test_bad_deck_list(self):
+        """Test for TypeError raised when decks list has non-accepted object
+        """
+        initial_attributes = {
+            'spaces': ['a', 'b', 'c'],
+            'tiles': self.test_tile_list,
+            'decks': self.test_deck_list + ['nonsense'],
+            'tokens': [],
+            'dice_rollers': self.test_roller_list,
+            'score': ["Player One Wins!"]
+        }
+        with self.assertRaises(TypeError) as context:
+            Board(**initial_attributes)
+
+    def test_bad_dice_roller_list(self):
+        """Test for TypeError when dice roller list has non-accepted object
+        """
+        initial_attributes = {
+            'spaces': ['a', 'b', 'c'],
+            'tiles': self.test_tile_list,
+            'decks': self.test_deck_list,
+            'tokens': [],
+            'dice_rollers': self.test_roller_list + ['nonsense'],
+            'score': ["Player One Wins!"]
+        }
+        with self.assertRaises(TypeError) as context:
+            Board(**initial_attributes)

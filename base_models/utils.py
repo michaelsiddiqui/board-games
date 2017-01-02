@@ -1,5 +1,6 @@
 # utility functions for repeated use across other base classes
 
+
 def list_type_check(check_object_list, check_class, error=False):
     """Utility function checks that all items in a list are a defined type
     """
@@ -15,4 +16,3 @@ def list_type_check(check_object_list, check_class, error=False):
         raise TypeError(error_message)
     else:
         return False
-

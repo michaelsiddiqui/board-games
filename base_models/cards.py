@@ -7,6 +7,7 @@ import random
 
 from utils import list_type_check
 
+
 class Card(object):
     """Base class for all card or tile objects in board_game project
 
